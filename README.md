@@ -1,7 +1,7 @@
 # AzureADResetPassword.gbapp
 Custom dialogs for reseting user password in Azure Active Directory, Office 365, Dynamics 365 or any app published through Azure AD.
 
-**Dialog**
+## Dialog
 
 ```
 User>I would like to reset my password.
@@ -16,12 +16,12 @@ Bot>Your new password is '2osdfhu*j'.
 User>Thank you.
 ```
 
-#API#
+## API
 
 1. https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-graph-api
 2. https://developer.microsoft.com/en-us/graph/docs/api-reference/v1.0/api/user_update
 
-#Articles#
+## Articles
 
 1. https://stackoverflow.com/questions/43625460/change-password-for-azure-ad-using-microsoft-graph
 2. https://stackoverflow.com/questions/44313884/insufficient-privileges-for-password-reset
