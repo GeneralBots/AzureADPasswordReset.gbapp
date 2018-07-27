@@ -16,12 +16,20 @@ Bot>Your new password is '2osdfhu*j'.
 User>Thank you.
 ```
 
-## API
+## Services
+
+
+
+References:
 
 1. https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-graph-api
 2. https://developer.microsoft.com/en-us/graph/docs/api-reference/v1.0/api/user_update
 
-## Articles
+## Model
+
+* ChangePasswordAuditLog
+
+## Notes
 
 1. https://stackoverflow.com/questions/43625460/change-password-for-azure-ad-using-microsoft-graph
 2. https://stackoverflow.com/questions/44313884/insufficient-privileges-for-password-reset
