@@ -1,0 +1,48 @@
+{
+  "name": "AzureADPasswordReset.gbapp",
+  "version": "1.0.0",
+  "description": "Azure AD Password Reset Application for General Bots.",
+  "author": "pragmatismo.io",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "license": "Private",
+  "private": true,
+  "engines": {
+    "node": ">=8.9.4",
+    "guaribas": "^4.0.0"
+  },
+  "dependencies": {
+    "botlib": "^0.0.29",
+    "botbuilder": "^4.0.0-preview1.2",
+    "botbuilder-ai": "^4.0.0-preview1.2",
+    "botbuilder-azure": "^4.0.0-preview1.2",
+    "botbuilder-choices": "^4.0.0-preview1.2",
+    "botbuilder-dialogs": "^4.0.0-preview1.2",
+    "botbuilder-prompts": "^4.0.0-preview1.2",
+    "botbuilder-location": "^2.0.0",
+    "csv-parse": "^2.4.0",
+    "d3-node": "^1.1.3",
+    "d3node-output": "^1.0.2",
+    "fs-walk": "^0.0.2",
+    "reflect-metadata": "^0.1.12",
+    "sequelize": "^4.37.10",
+    "sequelize-typescript": "^0.6.3",
+    "url-join": "^4.0.0",
+    "wait-until": "^0.0.2",
+    "winston": "^2.4.2",
+    "xlsx": "^0.12.13"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.3",
+    "@types/mocha": "^5.2.0",
+    "@types/sequelize": "^4.27.20",
+    "@types/url-join": "^0.8.2",
+    "@types/winston": "^2.3.9",
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "mocha-typescript": "^1.1.14",
+    "ts-node": "^6.0.5",
+    "typedoc": "^0.11.1",
+    "typescript": "^2.8.3"
+  }
+}
