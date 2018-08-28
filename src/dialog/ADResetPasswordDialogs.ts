@@ -25,7 +25,7 @@ const D3Node = require("d3-node");
 export class ADResetPasswordDialogs extends IGBDialog {
   static setup(bot: BotAdapter, min: GBMinInstance) {
 
-    min.dialogs.add("/Security.ResetPassword", [
+    min.dialogs.add("/Security_ResetPassword", [
       async (dc, args) => {
         let text = ["Please, what's your e-mail address?", "Please, tell me: What's your e-mail address?"];
         await dc.prompt('textPrompt', text[0]);
