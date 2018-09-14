@@ -11,7 +11,7 @@
 |                                                                             |
 \*****************************************************************************/
 
-"use strict";
+"use strict"
 
 import {
   Sequelize,
@@ -19,7 +19,7 @@ import {
   DataTypeUUIDv4,
   DataTypeDate,
   DataTypeDecimal
-} from "sequelize";
+} from "sequelize"
 import {
   Table,
   Column,
@@ -35,7 +35,7 @@ import {
   IsUUID,
   PrimaryKey,
   AutoIncrement
-} from "sequelize-typescript";
+} from "sequelize-typescript"
 
 @Table({ tableName: 'ADAudit' })
 export class ADAudit extends Model<ADAudit> {
@@ -43,12 +43,12 @@ export class ADAudit extends Model<ADAudit> {
   @PrimaryKey
   @AutoIncrement
   @Column
-  auditId: number;
+  auditId: number
 
   @Column
-  eventDate: Date;
+  eventDate: Date
 
   @Column
-  userEmail: string;
+  userEmail: string
 }
 

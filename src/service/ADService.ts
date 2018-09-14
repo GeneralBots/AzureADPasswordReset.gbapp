@@ -11,35 +11,13 @@
 |                                                                             |
 \*****************************************************************************/
 
-"use strict";
+"use strict"
 
-import { Sequelize } from "sequelize-typescript";
-import { fn } from "sequelize";
-import { Promise } from "bluebird";
-
-import { ADAudit } from "../model/ADModel";
-import { GBServiceCallback } from 'botlib';
-
-const Path = require("path");
-const Fs = require("fs");
-const _ = require("lodash");
-const Parse = require("csv-parse");
-const Async = require("async");
-const UrlJoin = require("url-join");
-const Walk = require("fs-walk");
-const logger = require("winston");
+import { ADAudit } from "../model/ADModel"
 
 export class ADService {
-  getAuditLog(
-    cb: GBServiceCallback<ADAudit[]>
-  ) {
-
-    ADAudit.findAll()
-      .then((values: ADAudit[]) => {
-        cb(values, null);
-      })
-      .error(reason => {
-        cb(null, reason);
-      });
+  async getAuditLog():
+    Promise<ADAudit[]> {
+    return ADAudit.findAll()
   }
 }

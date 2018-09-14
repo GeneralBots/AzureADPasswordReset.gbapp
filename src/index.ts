@@ -1,16 +1,16 @@
-"use strict";
+"use strict"
 
-import { IGBPackage, GBMinInstance, IGBCoreService } from 'botlib';
-import { Sequelize } from 'sequelize-typescript';
-import { ADAudit } from './model/ADModel';
+import { IGBPackage, GBMinInstance, IGBCoreService } from 'botlib'
+import { Sequelize } from 'sequelize-typescript'
+import { ADAudit } from './model/ADModel'
 
-import { ADResetPasswordDialogs } from './dialog/ADResetPasswordDialogs';
+import { ADResetPasswordDialogs } from './dialog/ADResetPasswordDialogs'
 
 export class Package implements IGBPackage {
-  sysPackages: IGBPackage[];
+  sysPackages: IGBPackage[]
 
   loadPackage(core: IGBCoreService, sequelize: Sequelize): void {
-    sequelize.addModels([ADAudit]);
+    sequelize.addModels([ADAudit])
   }
 
   unloadPackage(core: IGBCoreService): void {
@@ -18,7 +18,7 @@ export class Package implements IGBPackage {
   }
 
   loadBot(min: GBMinInstance): void {
-    ADResetPasswordDialogs.setup(min.bot, min);
+    ADResetPasswordDialogs.setup(min.bot, min)
   }
 
   unloadBot(min: GBMinInstance): void {
