@@ -13,21 +13,15 @@
 "use strict";
 
 import { IGBDialog, GBMinInstance } from "botlib";
-import { ADService } from "../service/ADService";
 import { BotAdapter } from "botbuilder";
-import { createOAuthPrompt } from "botbuilder-prompts";
 import { Messages } from "../strings";
 
-const Nexmo = require("nexmo");
 const PasswordGenerator = require("strict-password-generator").default;
 const MicrosoftGraph = require("@microsoft/microsoft-graph-client");
 
 export class ADResetPasswordDialogs extends IGBDialog {
-  static token = "";
-  static tenantName = "";
-  static apiKey = 0;
-  static apiSecret = "";
-  static serviceNumber = "";
+
+  token: string;
 
   /**
    * Setup dialogs flows and define services call.
@@ -36,73 +30,123 @@ export class ADResetPasswordDialogs extends IGBDialog {
    * @param min The minimal bot instance data.
    */
   static setup(bot: BotAdapter, min: GBMinInstance) {
-    min.dialogs.add("/Admin_UpdateToken", [async (dc, args, next) => {}]);
 
     min.dialogs.add("/Security_ResetPassword", [
-      async (dc, args, next) => {
+      async dc => {
+
+        // Manages state.
+
+        dc.activeDialog.state.resetInfo = {};
         const locale = dc.context.activity.locale;
-        await dc.Context.SendActivity(Messages[locale].ok_get_information);
 
-        // Prompt for the guest's name.
+        // Prompts for the guest's name.
 
-        await dc.Prompt("textPrompt", Messages[locale].whats_name);
+        await dc.context.sendActivity(Messages[locale].ok_get_information);
+        await dc.prompt("textPrompt", Messages[locale].whats_email);
       },
-      async (dc, args, next) => {
+      async (dc, email) => {
+        // Manages state.
+
         const locale = dc.context.activity.locale;
-        const name = args["Text"];
-        const user = min.userState.get(dc.context);
-        user.resetName = name;
+        dc.activeDialog.state.resetInfo.email = email;
 
-        // Prompt for the guest's mobile number.
+        // Prompts for the guest's mobile number.
 
-        await dc.Prompt("textPrompt", Messages[locale].whats_mobile);
+        await dc.prompt("textPrompt", Messages[locale].whats_mobile);
       },
-      async (dc, args, next) => {
+      async (dc, mobile) => {
+        // Manages state.
+
         const locale = dc.context.activity.locale;
-        const mobile = args["Text"];
-        const user = min.userState.get(dc.context);
-        user.resetMobile = mobile;
+        dc.activeDialog.state.resetInfo.mobile = mobile;
+
+        dc.activeDialog.state.resetInfo.adminToken = await min.core.adminService.getValue("authenticatorToken")
+
+        let savedMobile = await ADResetPasswordDialogs.getUserMobile(dc.activeDialog.state.resetInfo.adminToken,
+          dc.activeDialog.state.resetInfo.email
+        );
+
+        if (savedMobile != mobile) {
+          dc.endAll();
+          throw new Error('invalid number')
+        }
+
+        // Generates a new mobile code.
 
         let code = ADResetPasswordDialogs.getNewMobileCode();
-        ADResetPasswordDialogs.sendConfirmationSms(locale, code);
+        dc.activeDialog.state.resetInfo.sentCode = code;
+
+        // Sends a confirmation SMS.
+
+        await min.conversationService.sendSms(
+          mobile,
+          Messages[locale].please_use_code(code)
+        );
         await dc.context.sendActivity(Messages[locale].confirm_mobile);
       },
-      async (dc, value) => {
-        const user = min.userState.get(dc.context);
+      async (dc, typedCode) => {
+        // Manages state.
+
         const locale = dc.context.activity.locale;
 
-        let password = ADResetPasswordDialogs.getRndPassProfile();
-        ADResetPasswordDialogs.resetADPassProfile(password);
-        await dc.context.sendActivity(Messages[locale].new_password);
-      }
-    ]);
 
-    // TODO: See issue 970 https://github.com/Microsoft/BotFramework-WebChat/issues/970
-    const oauthPrompt = createOAuthPrompt({
-      text: "Please sign in",
-      title: "Sign in",
-      connectionName: `https://login.microsoftonline.com/${
-        ADResetPasswordDialogs.tenantName
-      }/oauth2/authorize`
+        // Checks if the typed code is equal to the one
+        // sent to the registered mobile.
+
+//        if (typedCode == dc.activeDialog.state.resetInfo.sentCode) {
+          let password = ADResetPasswordDialogs.getRndPassProfile();
+          
+          await ADResetPasswordDialogs.resetADPassProfile(dc.activeDialog.state.resetInfo.adminToken,
+            dc.activeDialog.state.resetInfo.email,
+            password
+          );
+          
+          await dc.context.sendActivity(
+            Messages[locale].new_password(password)
+          );
+        }
+  //    }
+    ]);
+  }
+
+  private static async getUserMobile(token: string, email: string): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      let client = MicrosoftGraph.Client.init({
+        authProvider: done => {
+          done(null, token);
+        }
+      });
+      client.api(`/users/${email}`).get((err, res) => {
+        if (err) { reject(err) }
+        else { resolve(res.value); }
+      });
+
     });
   }
 
-  private static resetADPassProfile(password: any) {
-    let client = MicrosoftGraph.Client.init({
-      authProvider: done => {
-        const account = {
-          accountEnabled: true,
-          passwordProfile: {
-            password: password,
-            forceChangePasswordNextSignIn: "true"
-          }
-        };
-        client.api("/users/test1@pragmatismo.io").patch(account, (err, res) => {
-          console.log(res);
-        });
+  private static async resetADPassProfile(token: string, email: string, passProfile: string) {
+    return new Promise<string>((resolve, reject) => {
+      let client = MicrosoftGraph.Client.init({
+        authProvider: done => {
+          done(null, token);
+        }
+      });
+      const account = {
+        accountEnabled: true,
+        passwordProfile: {
+          password: passProfile,
+          forceChangePasswordNextSignIn: "true"
+        }
+      };
 
-        done(null, ADResetPasswordDialogs.token);
-      }
+      client.api(`/users/${email}`).patch(account, (err, res) => {
+        if (err) {
+          reject(err)
+        }
+        else {
+          resolve(res);
+        }
+      });
     });
   }
 
@@ -118,18 +162,6 @@ export class ADResetPasswordDialogs extends IGBDialog {
     };
     let password = passwordGenerator.generatePassword(options);
     return password;
-  }
-
-  private static sendConfirmationSms(locale: any, code: any) {
-    const nexmo = new Nexmo({
-      apiKey: ADResetPasswordDialogs.apiKey,
-      apiSecret: ADResetPasswordDialogs.apiSecret
-    });
-    nexmo.message.sendSms(
-      ADResetPasswordDialogs.serviceNumber,
-      ADResetPasswordDialogs.serviceNumber,
-      Messages[locale].please_use_code(code)
-    );
   }
 
   private static getNewMobileCode() {
