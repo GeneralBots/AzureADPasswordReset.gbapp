@@ -65,7 +65,6 @@ export class ADResetPasswordDialogs extends IGBDialog {
         let savedMobile = await ADResetPasswordDialogs.getUserMobile(dc.activeDialog.state.resetInfo.adminToken,
           dc.activeDialog.state.resetInfo.email
         );
-
         if (savedMobile != mobile) {
           dc.endAll();
           throw new Error('invalid number')
@@ -78,7 +77,7 @@ export class ADResetPasswordDialogs extends IGBDialog {
 
         // Sends a confirmation SMS.
 
-        await min.conversationService.sendSms(
+        await min.conversationalService.sendSms(min,
           mobile,
           Messages[locale].please_use_code(code)
         );
@@ -93,19 +92,19 @@ export class ADResetPasswordDialogs extends IGBDialog {
         // Checks if the typed code is equal to the one
         // sent to the registered mobile.
 
-//        if (typedCode == dc.activeDialog.state.resetInfo.sentCode) {
-          let password = ADResetPasswordDialogs.getRndPassProfile();
-          
-          await ADResetPasswordDialogs.resetADPassProfile(dc.activeDialog.state.resetInfo.adminToken,
-            dc.activeDialog.state.resetInfo.email,
-            password
-          );
-          
-          await dc.context.sendActivity(
-            Messages[locale].new_password(password)
-          );
-        }
-  //    }
+        //        if (typedCode == dc.activeDialog.state.resetInfo.sentCode) {
+        let password = ADResetPasswordDialogs.getRndPassProfile();
+
+        await ADResetPasswordDialogs.resetADPassProfile(dc.activeDialog.state.resetInfo.adminToken,
+          dc.activeDialog.state.resetInfo.email,
+          password
+        );
+
+        await dc.context.sendActivity(
+          Messages[locale].new_password(password)
+        );
+      }
+      //    }
     ]);
   }
 
@@ -118,7 +117,7 @@ export class ADResetPasswordDialogs extends IGBDialog {
       });
       client.api(`/users/${email}`).get((err, res) => {
         if (err) { reject(err) }
-        else { resolve(res.value); }
+        else { resolve(res.mobilePhone); }
       });
 
     });
@@ -153,12 +152,12 @@ export class ADResetPasswordDialogs extends IGBDialog {
   private static getRndPassProfile() {
     const passwordGenerator = new PasswordGenerator();
     const options = {
-      upperCaseAlpha: false,
+      upperCaseAlpha: true,
       lowerCaseAlpha: true,
       number: true,
-      specialCharacter: false,
-      minimumLength: 10,
-      maximumLength: 12
+      specialCharacter: true,
+      minimumLength: 8,
+      maximumLength: 8
     };
     let password = passwordGenerator.generatePassword(options);
     return password;
