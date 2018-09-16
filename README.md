@@ -10,13 +10,13 @@ According to Dan Kershaw, the only way to reset an user's password programatical
 So the Bot provides an **admin** mode allowing the user having the Directory.AccessAsUser.All permission to be logged on Administrative interface to obtain and save its token into the database.
 
 
-![General Bot Logo](https://raw.githubusercontent.com/pragmatismo-io/AzureADPasswordReset.gbapp/docs/admin.gif)
+![General Bot Logo](https://raw.githubusercontent.com/pragmatismo-io/AzureADPasswordReset.gbapp/master/docs/admin.gif)
 
 With the access token stored in the database, any user can access anonymously  the 
 bot and through a combination of e-mail and password will be able to reset her or his password.
 
 
-![General Bot Logo](https://raw.githubusercontent.com/pragmatismo-io/AzureADPasswordReset.gbapp/docs/password.gif)
+![General Bot Logo](https://raw.githubusercontent.com/pragmatismo-io/AzureADPasswordReset.gbapp/master/docs/password.gif)
 
 ### References
 
