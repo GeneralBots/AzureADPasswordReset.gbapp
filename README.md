@@ -7,7 +7,7 @@ According to Dan Kershaw, the only way to reset an user's password programatical
 
 >Change Password - in Microsoft Graph (although not documented) you'll find the "changePassword" method on user - ../users/{id}/changePassword, which takes the old password and a new password. This API works ONLY for the signed-in user (so it requires the delegated OAuth2 code flow). It requires an admin to consent for Directory.AccessAsUser.All (although we are looking at adding a more granular permission).
 
-## Bot Administrator - Save Token to the Database
+## Bot Administrator - Generate Token
 
 So the Bot provides an **admin** mode allowing the user having the Directory.AccessAsUser.All permission to be logged on Administrative interface to obtain and save its token into the database.
 
