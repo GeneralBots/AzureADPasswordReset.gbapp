@@ -92,19 +92,19 @@ export class ADResetPasswordDialogs extends IGBDialog {
         // Checks if the typed code is equal to the one
         // sent to the registered mobile.
 
-        //        if (typedCode == dc.activeDialog.state.resetInfo.sentCode) {
-        let password = ADResetPasswordDialogs.getRndPassProfile();
+        if (typedCode == dc.activeDialog.state.resetInfo.sentCode) {
+          let password = ADResetPasswordDialogs.getRndPassProfile();
 
-        await ADResetPasswordDialogs.resetADPassProfile(dc.activeDialog.state.resetInfo.adminToken,
-          dc.activeDialog.state.resetInfo.email,
-          password
-        );
+          await ADResetPasswordDialogs.resetADPassProfile(dc.activeDialog.state.resetInfo.adminToken,
+            dc.activeDialog.state.resetInfo.email,
+            password
+          );
 
-        await dc.context.sendActivity(
-          Messages[locale].new_password(password)
-        );
+          await dc.context.sendActivity(
+            Messages[locale].new_password(password)
+          );
+        }
       }
-      //    }
     ]);
   }
 
