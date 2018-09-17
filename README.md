@@ -1,7 +1,7 @@
 # AzureADPasswordReset.gbapp
 Custom dialogs for reseting user password in Azure Active Directory, Office 365, Dynamics 365 or any app published through Azure AD.
 
-**DISCLAIMER**: **This is an experimental package - Use it at you own risk**
+**DISCLAIMER**: **This is an experimental package - Use it at your own risk.**
 
 According to Dan Kershaw, the only way to reset an user's password programaticaly is to use changePassword within user context that has the Directory.AccessAsUser.All permission.
 
