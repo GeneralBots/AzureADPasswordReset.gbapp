@@ -3,7 +3,8 @@ Custom dialogs for reseting user password in Azure Active Directory, Office 365,
 
 **DISCLAIMER**: **This is an experimental package - Use it at your own risk.**
 
-According to Dan Kershaw, the only way to reset an user's password programaticaly is to use changePassword within user context that has the Directory.AccessAsUser.All permission.
+According to Dan Kershaw - MSFT, the only way to reset an user's password programaticaly is to use changePassword within user context that has the Directory.AccessAsUser.All permission. 
+The solution provides an administrative bot session which allows an admistrator, with sufficient privilegies, to generate a token and persist it to the bot database. Then, with the initial administrative setup done, any user will be able to talk to the bot to reset their password, just providing their e-mail and confirming a SMS code received on the registered mobile phone on the Azure AD profile. 
 
 [Dan Kershaw – MSFT](https://stackoverflow.com/questions/44313884/insufficient-privileges-for-password-reset)
 
