@@ -3,8 +3,9 @@ Custom dialogs for reseting user password in Azure Active Directory, Office 365,
 
 **DISCLAIMER**: **THIS IS AN EXPERIMENTAL [.GBAPP](https://github.com/pragmatismo-io/BotServer#gbapp) PACKAGE - USE IT AT YOUR OWN RISK.**
 
-According to Dan Kershaw - MSFT, the only way to reset an user's password programaticaly is to use changePassword within user context that has the Directory.AccessAsUser.All permission. 
-The solution provides an administrative bot session which allows an admistrator, with sufficient privilegies, to generate a token and persist it to the bot database. Then, with the initial administrative setup done, any user will be able to talk to the bot to reset their password, just providing their e-mail and confirming a SMS code received on the registered mobile phone on the Azure AD profile. 
+According to Dan Kershaw - MSFT, the only way to reset an user's password programaticaly is to use changePassword (Microsoft Graph) within user context that has the Directory.AccessAsUser.All permission. 
+
+This solution provides an administrative bot session which allows an admistrator, with sufficient privilegies, to generate a token and persist it to the bot database. Then, with the initial administrative setup done, any user will be able to talk to the bot to reset their password, just providing their e-mail and confirming a SMS code received on the registered mobile phone on the Azure AD profile. 
 
 
 Also, he notes: "**(...)This is a very dangerous thing to allow an app to do, without a signed-in user being present, which is why we don't offer it(...)**"
@@ -22,7 +23,7 @@ So the Bot provides an **admin** mode allowing the user having the Directory.Acc
 ## Bot User - Reset Password
 
 With the access token stored in the database, any user can access anonymously  the 
-bot and through a combination of e-mail and password will be able to reset her or his password.
+bot and through a combination of e-mail and mobile received code, the user will be able to reset her or his password.
 
 ![General Bot Logo](https://raw.githubusercontent.com/pragmatismo-io/AzureADPasswordReset.gbapp/master/docs/password.gif)
 
