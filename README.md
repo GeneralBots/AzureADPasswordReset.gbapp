@@ -1,5 +1,5 @@
 # AzureADPasswordReset.gbapp
-Custom dialogs for reseting user password in Azure Active Directory, Office 365, Dynamics 365 or any app published through Azure AD.
+Custom dialogs for reseting user password in Azure Active Directory, Office 365, Dynamics 365 or any app published through Azure AD. Se also [IntranetBotQuickStart.gbai].(https://github.com/pragmatismo-io/IntranetBotQuickStart.gbai)
 
 **DISCLAIMER**: **THIS IS AN EXPERIMENTAL [.GBAPP](https://github.com/pragmatismo-io/BotServer#gbapp) PACKAGE - USE IT AT YOUR OWN RISK.**
 
