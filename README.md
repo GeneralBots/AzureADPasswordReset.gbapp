@@ -1,3 +1,5 @@
+*This is a General Bots open core package, more information can be found on the [BotServer](https://github.com/pragmatismo-io/BotServer) repository.*
+
 # AzureADPasswordReset.gbapp
 Custom dialogs for reseting user password in Azure Active Directory, Office 365, Dynamics 365 or any app published through Azure AD. Se also [IntranetBotQuickStart.gbai](https://github.com/pragmatismo-io/IntranetBotQuickStart.gbai)
 
