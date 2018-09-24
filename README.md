@@ -38,11 +38,12 @@ general-bots-reset-ad-password.gif
 
 ### Reset password via Skype
 
-This is the case when user does not have the password to login on Skype for Business or Teams, and they need to reset
-their password, so the right tool is Skype.
+This is the case when user does not have the password to login on Skype for Business or Teams, and they need to reset their password, so the right tool is Skype.
+
 ![General Bot Logo](https://raw.githubusercontent.com/pragmatismo-io/AzureADPasswordReset.gbapp/master/docs/general-bots-reset-ad-password.gif)
 
-### References
+
+## References
 
 1. https://docs.microsoft.com/en-us/azure/active-directory/develop/active-directory-graph-api
 2. https://developer.microsoft.com/en-us/graph/docs/api-reference/v1.0/api/user_update
