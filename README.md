@@ -40,7 +40,7 @@ general-bots-reset-ad-password.gif
 
 This is the case when user does not have the password to login on Skype for Business or Teams, and they need to reset
 their password, so the right tool is Skype.
-![General Bot Logo](https://raw.githubusercontent.com/pragmatismo-io/AzureADPasswordReset.gbapp/master/docs/password.gif)
+![General Bot Logo](https://raw.githubusercontent.com/pragmatismo-io/AzureADPasswordReset.gbapp/master/docs/general-bots-reset-ad-password.gif)
 
 ### References
 
