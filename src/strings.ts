@@ -4,9 +4,9 @@ export const Messages = {
     thanks_for_sharing:"Your token is being saved. Thanks", 
     will_answer_projector:"I'll answer on the projector to a better experience...",
     ok_get_information: "OK, I will get some information.", 
-    whats_email: "What's your e-mail address(Work Account)", 
-    whats_mobile: "What's your recovery mobile number?", 
-    confirm_mobile: "Please confirm the code sent to your mobile.", 
+    whats_email: "What's your E-mail address?", 
+    whats_mobile: "What's your recovery mobile number (e.g. +1 2229998888)?", 
+    confirm_mobile: "Please type the code just sent to your mobile.", 
     new_password: (newPassword)=> `Your new password is: **${newPassword}**.`,
     please_use_code:(code)=> `Please, answer the Bot with the code: ${code}.`
   },

@@ -15,6 +15,7 @@
 import { IGBDialog, GBMinInstance } from "botlib";
 import { BotAdapter } from "botbuilder";
 import { Messages } from "../strings";
+  var AuthenticationContext = require('adal-node').AuthenticationContext;
 
 const PasswordGenerator = require("strict-password-generator").default;
 const MicrosoftGraph = require("@microsoft/microsoft-graph-client");
@@ -31,11 +32,9 @@ export class ADResetPasswordDialogs extends IGBDialog {
    */
   static setup(bot: BotAdapter, min: GBMinInstance) {
 
+
     min.dialogs.add("/Security_ResetPassword", [
       async dc => {
-
-        // Manages state.
-
         dc.activeDialog.state.resetInfo = {};
         const locale = dc.context.activity.locale;
 
@@ -45,26 +44,29 @@ export class ADResetPasswordDialogs extends IGBDialog {
         await dc.prompt("textPrompt", Messages[locale].whats_email);
       },
       async (dc, email) => {
-        // Manages state.
-
         const locale = dc.context.activity.locale;
-        dc.activeDialog.state.resetInfo.email = email;
+
+         const extractEmails = ( text ) =>{
+          return text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi);
+          }
+
+        dc.activeDialog.state.resetInfo.email = extractEmails(email)[0];
 
         // Prompts for the guest's mobile number.
 
         await dc.prompt("textPrompt", Messages[locale].whats_mobile);
       },
       async (dc, mobile) => {
-        // Manages state.
-
         const locale = dc.context.activity.locale;
         dc.activeDialog.state.resetInfo.mobile = mobile;
 
-        dc.activeDialog.state.resetInfo.adminToken = await min.core.adminService.getValue("authenticatorToken")
-
-        let savedMobile = await ADResetPasswordDialogs.getUserMobile(dc.activeDialog.state.resetInfo.adminToken,
+        dc.activeDialog.state.resetInfo.adminToken = 
+          await min.adminService.acquireElevatedToken(min.instance.instanceId)
+        let savedMobile = 
+          await ADResetPasswordDialogs.getUserMobile(dc.activeDialog.state.resetInfo.adminToken,
           dc.activeDialog.state.resetInfo.email
         );
+
         if (savedMobile != mobile) {
           dc.endAll();
           throw new Error('invalid number')
@@ -84,10 +86,7 @@ export class ADResetPasswordDialogs extends IGBDialog {
         await dc.context.sendActivity(Messages[locale].confirm_mobile);
       },
       async (dc, typedCode) => {
-        // Manages state.
-
         const locale = dc.context.activity.locale;
-
 
         // Checks if the typed code is equal to the one
         // sent to the registered mobile.
@@ -103,6 +102,8 @@ export class ADResetPasswordDialogs extends IGBDialog {
           await dc.context.sendActivity(
             Messages[locale].new_password(password)
           );
+
+          await dc.replace("/ask", { isReturning: true })
         }
       }
     ]);
@@ -119,7 +120,6 @@ export class ADResetPasswordDialogs extends IGBDialog {
         if (err) { reject(err) }
         else { resolve(res.mobilePhone); }
       });
-
     });
   }
 
