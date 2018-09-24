@@ -16,17 +16,30 @@ Also, he notes: "**(...)This is a very dangerous thing to allow an app to do, wi
 
 >Change Password - in Microsoft Graph (although not documented) you'll find the "changePassword" method on user - ../users/{id}/changePassword, which takes the old password and a new password. This API works ONLY for the signed-in user (so it requires the delegated OAuth2 code flow). It requires an admin to consent for Directory.AccessAsUser.All (although we are looking at adding a more granular permission).
 
-## Bot Administrator - Generate Token
+## Bot Administrator - Setup Security
 
 So the Bot provides an **admin** mode allowing the user having the Directory.AccessAsUser.All permission to be logged on Administrative interface to obtain and save its token into the database.
 
-![General Bot Logo](https://raw.githubusercontent.com/pragmatismo-io/AzureADPasswordReset.gbapp/master/docs/admin.gif)
+![General Bot Logo](https://raw.githubusercontent.com/pragmatismo-io/AzureADPasswordReset.gbapp/master/docs/general-bots-reset-ad-password-admin.gif)
 
 ## Bot User - Reset Password
+
 
 With the access token stored in the database, any user can access anonymously  the 
 bot and through a combination of e-mail and mobile received code, the user will be able to reset her or his password.
 
+### Reset password via Web
+
+Any user can use a web address to talk to a reset password bot. Just provide credentials that are confronted with Microsoft Graph to ensure security.
+
+![General Bot Logo](https://raw.githubusercontent.com/pragmatismo-io/AzureADPasswordReset.gbapp/master/docs/password.gif)
+
+general-bots-reset-ad-password.gif	
+
+### Reset password via Skype
+
+This is the case when user does not have the password to login on Skype for Business or Teams, and they need to reset
+their password, so the right tool is Skype.
 ![General Bot Logo](https://raw.githubusercontent.com/pragmatismo-io/AzureADPasswordReset.gbapp/master/docs/password.gif)
 
 ### References
