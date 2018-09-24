@@ -3,18 +3,6 @@
 # AzureADPasswordReset.gbapp
 Custom dialogs for reseting user password in Azure Active Directory, Office 365, Dynamics 365 or any app published through Azure AD. Se also [IntranetBotQuickStart.gbai](https://github.com/pragmatismo-io/IntranetBotQuickStart.gbai)
 
-**DISCLAIMER**: **THIS IS AN EXPERIMENTAL [.GBAPP](https://github.com/pragmatismo-io/BotServer#gbapp) PACKAGE - USE IT AT YOUR OWN RISK.**
-
-According to Dan Kershaw - MSFT, the only way to reset an user's password programaticaly is to use changePassword (Microsoft Graph) within user context that has the Directory.AccessAsUser.All permission. 
-
-This solution provides an administrative bot session which allows an admistrator, with sufficient privilegies, to generate a token and persist it to the bot database. Then, with the initial administrative setup done, any user will be able to talk to the bot to reset their password, just providing their e-mail and confirming a SMS code received on the registered mobile phone on the Azure AD profile. 
-
-
-Also, he notes: "**(...)This is a very dangerous thing to allow an app to do, without a signed-in user being present, which is why we don't offer it(...)**"
-
-[Dan Kershaw – MSFT](https://stackoverflow.com/questions/44313884/insufficient-privileges-for-password-reset)
-
->Change Password - in Microsoft Graph (although not documented) you'll find the "changePassword" method on user - ../users/{id}/changePassword, which takes the old password and a new password. This API works ONLY for the signed-in user (so it requires the delegated OAuth2 code flow). It requires an admin to consent for Directory.AccessAsUser.All (although we are looking at adding a more granular permission).
 
 ## Bot Administrator - Setup Security
 
@@ -72,3 +60,17 @@ GNU Affero General Public License for more details.
 The licensing of the program under the AGPLv3 does not imply a
 trademark license. Therefore any rights, title and interest in
 our trademarks remain entirely with us.
+
+## DISCLAIMER
+
+**THIS IS AN EXPERIMENTAL [.GBAPP](https://github.com/pragmatismo-io/BotServer#gbapp) PACKAGE - USE IT AT YOUR OWN RISK.**
+
+According to Dan Kershaw - MSFT, the only way to reset an user's password programaticaly is to use changePassword (Microsoft Graph) within user context that has the Directory.AccessAsUser.All permission. 
+
+This solution provides an administrative bot session which allows an admistrator, with sufficient privilegies, to generate a token and persist it to the bot database. Then, with the initial administrative setup done, any user will be able to talk to the bot to reset their password, just providing their e-mail and confirming a SMS code received on the registered mobile phone on the Azure AD profile. 
+
+Also, he notes: "**(...)This is a very dangerous thing to allow an app to do, without a signed-in user being present, which is why we don't offer it(...)**"
+
+[Dan Kershaw – MSFT](https://stackoverflow.com/questions/44313884/insufficient-privileges-for-password-reset)
+
+>Change Password - in Microsoft Graph (although not documented) you'll find the "changePassword" method on user - ../users/{id}/changePassword, which takes the old password and a new password. This API works ONLY for the signed-in user (so it requires the delegated OAuth2 code flow). It requires an admin to consent for Directory.AccessAsUser.All (although we are looking at adding a more granular permission).
