@@ -1,8 +1,9 @@
 *This is a General Bots open core package, more information can be found on the [BotServer](https://github.com/pragmatismo-io/BotServer) repository.*
 
+Associated article (Applied AI – Using a Bot for Password Reset)[https://blogs.msdn.microsoft.com/buckwoody/2018/09/25/applied-ai-using-a-bot-for-password-reset/].
+
 # AzureADPasswordReset.gbapp
 Custom dialogs for reseting user password in Azure Active Directory, Office 365, Dynamics 365 or any app published through Azure AD. Se also [IntranetBotQuickStart.gbai](https://github.com/pragmatismo-io/IntranetBotQuickStart.gbai)
-
 
 ## Bot Administrator - Setup Security
 
