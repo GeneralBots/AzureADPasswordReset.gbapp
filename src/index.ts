@@ -9,6 +9,10 @@ import { ADResetPasswordDialogs } from './dialog/ADResetPasswordDialogs'
 export class Package implements IGBPackage {
   sysPackages: IGBPackage[]
 
+  public getDialogs(min: GBMinInstance) {
+    return [ADResetPasswordDialogs.getDialog(min)];
+  }
+
   loadPackage(core: IGBCoreService, sequelize: Sequelize): void {
     sequelize.addModels([ADAudit])
   }
@@ -18,7 +22,7 @@ export class Package implements IGBPackage {
   }
 
   loadBot(min: GBMinInstance): void {
-    ADResetPasswordDialogs.setup(min.bot, min)
+
   }
 
   unloadBot(min: GBMinInstance): void {

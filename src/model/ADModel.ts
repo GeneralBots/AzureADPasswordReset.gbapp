@@ -16,9 +16,6 @@
 import {
   Sequelize,
   DataTypes,
-  DataTypeUUIDv4,
-  DataTypeDate,
-  DataTypeDecimal
 } from "sequelize"
 import {
   Table,
@@ -51,4 +48,3 @@ export class ADAudit extends Model<ADAudit> {
   @Column
   userEmail: string
 }
-

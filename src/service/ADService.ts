@@ -7,17 +7,91 @@
 |   | |                ( )_) |                                                |
 |   (_)                 \___/'                                                |
 |                                                                             |
-|    Copyright 2018 (c) pragmatismo.io. Todos os direitos reservados.         |
+|    Copyright 2018-2019 (c) pragmatismo.io. Todos os direitos reservados.    |
 |                                                                             |
 \*****************************************************************************/
 
 "use strict"
 
 import { ADAudit } from "../model/ADModel"
+var AuthenticationContext = require('adal-node').AuthenticationContext;
+
+const PasswordGenerator = require("strict-password-generator").default;
+const MicrosoftGraph = require("@microsoft/microsoft-graph-client");
 
 export class ADService {
   async getAuditLog():
     Promise<ADAudit[]> {
     return ADAudit.findAll()
   }
+
+
+  public static async getUserMobile(token: string, email: string): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      let client = MicrosoftGraph.Client.init({
+        authProvider: done => {
+          done(null, token);
+        }
+      });
+      client.api(`/users/${email}`).get((err, res) => {
+        if (err) { reject(err) }
+        else { resolve(res.mobilePhone); }
+      });
+    });
+  }
+
+  public static async resetADPassProfile(token: string, email: string, passProfile: string) {
+    return new Promise<string>((resolve, reject) => {
+      let client = MicrosoftGraph.Client.init({
+        authProvider: done => {
+          done(null, token);
+        }
+      });
+      const account = {
+        accountEnabled: true,
+        passwordProfile: {
+          password: passProfile,
+          forceChangePasswordNextSignIn: "true"
+        }
+      };
+
+      client.api(`/users/${email}`).patch(account, (err, res) => {
+        if (err) {
+          reject(err)
+        }
+        else {
+          resolve(res);
+        }
+      });
+    });
+  }
+
+  public static getRndPassProfile() {
+    const passwordGenerator = new PasswordGenerator();
+    const options = {
+      upperCaseAlpha: true,
+      lowerCaseAlpha: true,
+      number: true,
+      specialCharacter: true,
+      minimumLength: 8,
+      maximumLength: 8
+    };
+    let password = passwordGenerator.generatePassword(options);
+    return password;
+  }
+
+  public static getNewMobileCode() {
+    const passwordGenerator = new PasswordGenerator();
+    const options = {
+      upperCaseAlpha: false,
+      lowerCaseAlpha: false,
+      number: true,
+      specialCharacter: false,
+      minimumLength: 4,
+      maximumLength: 4
+    };
+    let code = passwordGenerator.generatePassword(options);
+    return code;
+  }
+
 }
