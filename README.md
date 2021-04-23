@@ -1,4 +1,4 @@
-#UPDATE  2021-04-13
+# UPDATE  2021-04-13
 There are a new alternative to Directory.AccessAsUser.All as Microsoft released the new UserAuthenticationMethod.ReadWrite.All permission (https://docs.microsoft.com/pt-br/graph/api/passwordauthenticationmethod-resetpassword?view=graph-rest-beta&tabs=http).
 
 
