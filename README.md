@@ -1,3 +1,8 @@
+#UPDATE  2021-04-13
+There are a new alternative to Directory.AccessAsUser.All as Microsoft released the new UserAuthenticationMethod.ReadWrite.All permission (https://docs.microsoft.com/pt-br/graph/api/passwordauthenticationmethod-resetpassword?view=graph-rest-beta&tabs=http).
+
+
+
 *This is a General Bots open core package, more information can be found on the [BotServer](https://github.com/pragmatismo-io/BotServer) repository.*
 
 MSDN article **[Applied AI – Using a Bot for Password Reset](https://blogs.msdn.microsoft.com/buckwoody/2018/09/25/applied-ai-using-a-bot-for-password-reset)** by *Rodrigo Souza*.
