@@ -26,48 +26,49 @@ export class ADResetPasswordDialogs extends IGBDialog {
 
     return {
       id: '/Security_ResetPassword', waterfall: [
-        async dc => {
-          dc.activeDialog.state.resetInfo = {};
-          const locale = dc.context.activity.locale;
+        async step=>{
+          step.activeDialog.state.resetInfo = {};
+          const locale = step.context.activity.locale;
 
           // Prompts for the guest's name.
 
-          await dc.context.sendActivity(Messages[locale].ok_get_information);
-          await dc.prompt("textPrompt", Messages[locale].whats_email);
+          await step.context.sendActivity(Messages[locale].ok_get_information);
+          await step.prompt("textPrompt", Messages[locale].whats_email);
         },
-        async (dc, email) => {
-          const locale = dc.context.activity.locale;
+        async (step ) => {
+          const email = step.result;
+          const locale = step.context.activity.locale;
 
           const extractEmails = (text) => {
             return text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi);
           }
 
-          dc.activeDialog.state.resetInfo.email = extractEmails(email)[0];
+          step.activeDialog.state.resetInfo.email = extractEmails(email)[0];
 
           // Prompts for the guest's mobile number.
 
-          await dc.prompt("textPrompt", Messages[locale].whats_mobile);
+          await step.prompt("textPrompt", Messages[locale].whats_mobile);
         },
-        async (dc, mobile) => {
-          const locale = dc.context.activity.locale;
-          dc.activeDialog.state.resetInfo.mobile = mobile;
+        async (step) => {
+          const mobile = step.result;
+          const locale = step.context.activity.locale;
+          step.activeDialog.state.resetInfo.mobile = mobile;
 
-          dc.activeDialog.state.resetInfo.adminToken =
+          step.activeDialog.state.resetInfo.adminToken =
             await min.adminService.acquireElevatedToken(min.instance.instanceId)
           let savedMobile =
-            await ADService.getUserMobile(dc.activeDialog.state.resetInfo.adminToken,
-              dc.activeDialog.state.resetInfo.email
+            await ADService.getUserMobile(step.activeDialog.state.resetInfo.adminToken,
+              step.activeDialog.state.resetInfo.email
             );
 
           if (savedMobile != mobile) {
-            dc.endAll();
             throw new Error('invalid number')
           }
 
           // Generates a new mobile code.
 
           let code = ADService.getNewMobileCode();
-          dc.activeDialog.state.resetInfo.sentCode = code;
+          step.activeDialog.state.resetInfo.sentCode = code;
 
           // Sends a confirmation SMS.
 
@@ -75,27 +76,28 @@ export class ADResetPasswordDialogs extends IGBDialog {
             mobile,
             Messages[locale].please_use_code(code)
           );
-          await dc.context.sendActivity(Messages[locale].confirm_mobile);
+          await step.context.sendActivity(Messages[locale].confirm_mobile);
         },
-        async (dc, typedCode) => {
-          const locale = dc.context.activity.locale;
+        async (step) => {
+          const typestepode = step.result;
+          const locale = step.context.activity.locale;
 
           // Checks if the typed code is equal to the one
           // sent to the registered mobile.
 
-          if (typedCode == dc.activeDialog.state.resetInfo.sentCode) {
+          if (typestepode == step.activeDialog.state.resetInfo.sentCode) {
             let password = ADService.getRndPassProfile();
 
-            await ADService.resetADPassProfile(dc.activeDialog.state.resetInfo.adminToken,
-              dc.activeDialog.state.resetInfo.email,
+            await ADService.resetADPassProfile2(step.activeDialog.state.resetInfo.adminToken,
+              step.activeDialog.state.resetInfo.email,
               password
             );
 
-            await dc.context.sendActivity(
+            await step.context.sendActivity(
               Messages[locale].new_password(password)
             );
 
-            await dc.replace("/ask", { isReturning: true })
+            await step.replace("/ask", { isReturning: true })
           }
         }
       ]

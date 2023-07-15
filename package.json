@@ -12,16 +12,16 @@
   },
   "dependencies": {
     "@microsoft/microsoft-graph-client": "^1.2.0",
-    "adal-node": "^0.1.28",
+    "adal-node": "0.1.28",
     "botbuilder": "4.4.0",
     "botbuilder-ai": "4.4.0",
     "botbuilder-azure": "4.4.0",
     "botbuilder-choices": "4.0.0-preview1.2",
     "botbuilder-dialogs": "4.4.0",
     "botbuilder-prompts": "4.0.0-preview1.2",
-    "botlib": "1.2.0",
-    "strict-password-generator": "^1.1.1",
-    "url-join": "^4.0.0"
+    "botlib": "3.0.11",
+    "strict-password-generator": "1.1.1",
+    "url-join": "4.0.0"
   },
   "devDependencies": {
     "@types/url-join": "^0.8.2",

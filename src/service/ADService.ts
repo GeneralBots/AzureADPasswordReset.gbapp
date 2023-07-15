@@ -65,6 +65,29 @@ export class ADService {
       });
     });
   }
+  public static async resetADPassProfile2(token: string, email: string, passProfile: string) {
+    return new Promise<string>((resolve, reject) => {
+      let client = MicrosoftGraph.Client.init({
+        authProvider: done => {
+          done(null, token);
+        }
+      });
+      const account = {
+        newPassword: passProfile,
+        forceChangePasswordNextSignIn: "true"
+      };
+
+      client.api(`/users/${email}/authentication/passwordMethods/28c10230-6103-485e-b985-444c60001490/resetPassword`)
+        .post(account, (err, res) => {
+        if (err) {
+          reject(err)
+        }
+        else {
+          resolve(res);
+        }
+      });
+    });
+  }
 
   public static getRndPassProfile() {
     const passwordGenerator = new PasswordGenerator();

@@ -7,29 +7,32 @@ import { ADAudit } from './model/ADModel'
 import { ADResetPasswordDialogs } from './dialog/ADResetPasswordDialogs'
 
 export class Package implements IGBPackage {
+  onExchangeData(min: GBMinInstance, kind: string, data: any) {
+    
+  }
   sysPackages: IGBPackage[]
 
   public getDialogs(min: GBMinInstance) {
     return [ADResetPasswordDialogs.getDialog(min)];
   }
 
-  loadPackage(core: IGBCoreService, sequelize: Sequelize): void {
+  async loadPackage(core: IGBCoreService, sequelize: Sequelize): Promise<void> {
     sequelize.addModels([ADAudit])
   }
 
-  unloadPackage(core: IGBCoreService): void {
+  async unloadPackage(core: IGBCoreService)  {
 
   }
 
-  loadBot(min: GBMinInstance): void {
+  async loadBot(min: GBMinInstance) {
 
   }
 
-  unloadBot(min: GBMinInstance): void {
+  async unloadBot(min: GBMinInstance) {
 
   }
 
-  onNewSession(min: GBMinInstance, dc: any): void {
+  async onNewSession(min: GBMinInstance, dc: any) {
 
   }
 }
