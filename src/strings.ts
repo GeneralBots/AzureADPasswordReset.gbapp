@@ -7,7 +7,7 @@ export const Messages = {
     whats_email: "What's your E-mail address?", 
     whats_mobile: "What's your recovery mobile number (e.g. +1 2229998888)?", 
     confirm_mobile: "Please type the code just sent to your mobile.", 
-    new_password: (newPassword)=> `Your new temporary password is: ${newPassword}. Go to https://myaccount.microsoft.com and login with the new information provided.`,
+    new_password: (newPassword)=> `Your new temporary password is: **${newPassword}**. Go to https://myaccount.microsoft.com and login with the new information provided.`,
     please_use_code:(code)=> `Please, answer the Bot with the code: ${code}.`
   },
   "pt-BR": {
@@ -18,7 +18,7 @@ export const Messages = {
     whats_email: "Qual o seu e-mail na sua organização?", 
     whats_mobile: "Qual o seu celular cadastrado?", 
     confirm_mobile: "Por favor, digite o código enviado para seu celular.", 
-    new_password: (newPassword) => `Sua nova senha temporária é: ${newPassword}. Acesse https://myaccount.microsoft.com e faça login com as novas informações fornecidas.`,
+    new_password: (newPassword) => `Sua nova senha temporária é: **${newPassword}**. Acesse https://minhaconta.microsoft.com e faça login com as novas informações fornecidas.`,
     please_use_code:(code)=> `Por favor, responda ao bot com o código: ${code}.`
   }
 };
