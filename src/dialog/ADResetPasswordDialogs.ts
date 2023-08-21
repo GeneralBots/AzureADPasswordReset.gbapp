@@ -50,7 +50,7 @@
             await step.prompt("textPrompt", Messages[locale].whats_mobile);
           },
           async (step) => {
-            const mobile = step.result;
+            const mobile = step.result.replace(/\+|\s|\-/g, '');
             const locale = step.context.activity.locale;
             step.activeDialog.state.resetInfo.mobile = mobile;
 
@@ -60,7 +60,7 @@
               await ADService.getUserMobile(step.activeDialog.state.resetInfo.adminToken,
                 step.activeDialog.state.resetInfo.email
               );
-
+            savedMobile = savedMobile.replace(/\+|\s|\-/g, '');
             if (savedMobile != mobile) {
               throw new Error('invalid number')
             }
@@ -74,7 +74,7 @@
             // Sends a confirmation SMS.
 
             await min.whatsAppDirectLine.sendToDevice(
-              mobile.replace(/\+|\s|\-/g, ''),
+              mobile,
               Messages[locale].please_use_code(code)
             );
             await step.context.sendActivity(Messages[locale].confirm_mobile);
