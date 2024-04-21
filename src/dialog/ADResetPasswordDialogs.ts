@@ -7,7 +7,7 @@
   |   | |                ( )_) |                                                |
   |   (_)                 \___/'                                                |
   |                                                                             |
-  |    Copyright 2018-2019 (c) pragmatismo.io. Todos os direitos reservados.    |
+  |    Copyright 2018-2019 (c) pragmatismo.cloud. Todos os direitos reservados.    |
   \*****************************************************************************/
 
   "use strict";
@@ -75,18 +75,18 @@
 
             await min.whatsAppDirectLine.sendToDevice(
               mobile,
-              Messages[locale].please_use_code(code)
+              `Por favor, digite o código: ${code}.`
             );
-            await step.context.sendActivity(Messages[locale].confirm_mobile);
+            await step.prompt("textPrompt", Messages[locale].confirm_mobile);
           },
           async (step) => {
-            const typestepode = step.result;
+            const typed = step.result;
             const locale = step.context.activity.locale;
 
             // Checks if the typed code is equal to the one
             // sent to the registered mobile.
 
-            if (typestepode == step.activeDialog.state.resetInfo.sentCode) {
+            if (typed == step.activeDialog.state.resetInfo.sentCode) {
               GBLog.info(`Reset: Calling AD to reset credentials...`);
               let password = ADService.getRndPassProfile();
 

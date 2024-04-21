@@ -2,7 +2,7 @@
   "name": "AzureADPasswordReset.gbapp",
   "version": "1.0.2",
   "description": "Azure AD Password Reset Application for General Bots.",
-  "author": "pragmatismo.io",
+  "author": "pragmatismo.cloud",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "Private",

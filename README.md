@@ -46,7 +46,7 @@ This is the case when user does not have the password to login on Skype for Busi
 
 ## License & Warranty
 
-General Bots Copyright (c) Pragmatismo.io. All rights reserved.
+General Bots Copyright (c) pragmatismo.cloud. All rights reserved.
 Licensed under the AGPL-3.0.       
                                                             
 According to our dual licensing model, this program can be used either
@@ -62,7 +62,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU Affero General Public License for more details.
                                                         
-"General Bot" is a registered trademark of Pragmatismo.io.
+"General Bot" is a registered trademark of pragmatismo.cloud.
 The licensing of the program under the AGPLv3 does not imply a
 trademark license. Therefore any rights, title and interest in
 our trademarks remain entirely with us.

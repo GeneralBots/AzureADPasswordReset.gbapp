@@ -7,7 +7,7 @@
 |   | |                ( )_) |                                                |
 |   (_)                 \___/'                                                |
 |                                                                             |
-|    Copyright 2018-2019 (c) pragmatismo.io. Todos os direitos reservados.    |
+|    Copyright 2018-2019 (c) pragmatismo.cloud. Todos os direitos reservados.    |
 |                                                                             |
 \*****************************************************************************/
 
