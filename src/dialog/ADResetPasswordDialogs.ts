@@ -28,7 +28,7 @@
         id: '/Security_ResetPassword', waterfall: [
           async step=>{
             step.activeDialog.state.resetInfo = {};
-            const locale = step.context.activity.locale;
+            const locale = 'en-US';
 
             // Prompts for the guest's name.
 
@@ -37,7 +37,7 @@
           },
           async (step ) => {
             const email = step.result;
-            const locale = step.context.activity.locale;
+            const locale = 'en-US';
 
             const extractEmails = (text) => {
               return text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi);
@@ -51,7 +51,7 @@
           },
           async (step) => {
             const mobile = step.result.replace(/\+|\s|\-/g, '');
-            const locale = step.context.activity.locale;
+            const locale = 'en-US';
             step.activeDialog.state.resetInfo.mobile = mobile;
 
             step.activeDialog.state.resetInfo.adminToken =
@@ -68,7 +68,7 @@
             // Generates a new mobile code.
 
             let code = ADService.getNewMobileCode();
-            GBLog.info(`Reset: Generated new code: ${code} is being sent.`);
+            GBLog.info( `Reset: Generated new code: ${code} is being sent.`);
             step.activeDialog.state.resetInfo.sentCode = code;
 
             // Sends a confirmation SMS.
@@ -81,13 +81,13 @@
           },
           async (step) => {
             const typed = step.result;
-            const locale = step.context.activity.locale;
+            const locale = 'en-US';
 
             // Checks if the typed code is equal to the one
             // sent to the registered mobile.
 
             if (typed == step.activeDialog.state.resetInfo.sentCode) {
-              GBLog.info(`Reset: Calling AD to reset credentials...`);
+              GBLog.info( `Reset: Calling AD to reset credentials...`);
               let password = ADService.getRndPassProfile();
 
               await ADService.resetADPassProfile2(step.activeDialog.state.resetInfo.adminToken,
@@ -98,7 +98,7 @@
               await step.context.sendActivity(
                 Messages[locale].new_password(password)
               );
-              GBLog.info(`Reset: New credential assigned.`);
+              GBLog.info( `Reset: New credential assigned.`);
               await step.replaceDialog("/ask", { isReturning: true })
             }
           }
